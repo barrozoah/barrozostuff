@@ -1,0 +1,196 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plasmati Graduate CV
+% LaTeX Template
+% Version 1.0 (24/3/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Alessandro Plasmati (alessandro.plasmati@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template needs to be compiled with XeLaTeX.
+% The main document font is called Fontin and can be downloaded for free
+% from here: http://www.exljbris.com/fontin.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,10pt]{article} % Default font size and paper size
+
+\usepackage{fontspec} % For loading fonts
+\defaultfontfeatures{Mapping=tex-text}
+
+\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
+
+\usepackage{xunicode,xltxtra,url,parskip} % Formatting packages
+
+\usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
+
+\usepackage[big]{layaureo} % Margin formatting of the A4 page, an alternative to layaureo can be \usepackage{fullpage}
+% To reduce the height of the top margin uncomment: \addtolength{\voffset}{-1.3cm}
+
+\usepackage{hyperref} % Required for adding links	and customizing them
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+% \usepackage[T1]{fontenc}
+
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+
+\begin{document}
+
+\pagestyle{empty} % Removes page numbering
+
+\font\fb=''[cmr10]'' % Change the font of the \LaTeX command under the skills section
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\par{\centering{\Huge Alexandre Hernandes Barrozo}\bigskip\par} % Your name
+
+\section{Personal Data}
+
+\begin{tabular}{rl}
+\textsc{Place and Date of Birth:} &  Brazil, 20 January 1987 \\
+\textsc{Address:} & Norbyv\"agen 47, Uppsala; SE-75239 - Sweden \\
+\textsc{Phone:} & +46723958166 \\
+\textsc{email:} & \href{mailto:barrozo.ah@gmail.com}{barrozo.ah@gmail.com}
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION 
+%----------------------------------------------------------------------------------------
+
+\section{Education}
+
+\begin{tabular}{r|p{11cm}}
+\emph{Current} & \textbf{ 4\textsuperscript{th} year PhD student in Biotechnology at Uppsala University, Sweden} \\
+\textsc{Dec 2011} & \emph{Thesis title: Promiscuity and Selectivity in Phospho/sulfuryl transferases.} Supervisor: Lynn Kamerlin \\ 
+& \footnotesize{Studied enzyme promiscuity and selectivity using the Empirical Valence Bond methodology. Performed DFT calculations to study reactions in solution and participated in the development of the software package Q. Taught as an assistant in several courses and organized workshops.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{Jul 2009-Sep 2011} & \textbf{Master studies in Physics at the University of Campinas, Brazil}\\
+& \emph{Dissertation title: Transport Constants Calculations by Means of Non-Equilibrium Simulations.} \\ &  Supervisor: Maurice de Koning\\
+& \footnotesize{Developed an independent MD code, as well as modified existing routines (LAMMPS) to implement new tools. Performed Free-Energy Perturbation calculations.} \\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{Jan 2005-Jun 2009} & \textbf{Bachelor degree in Physics at the University of Campinas, Brazil} \emph{}\\
+& \emph{Monograph title: Statistical Physics of Polymers: A Computer Approach Using Monte Carlo} \\ & Supervisor: Maurice de Koning \\ 
+& \footnotesize{Worked on a simple model for polymers using self-avoiding random walks in a cubic lattice to study folding at constant temperature.}
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	GRANTS AND FELLOWSHIPS
+%----------------------------------------------------------------------------------------
+
+\section{Scholarships}
+
+\begin{tabular}{r|p{12cm}}	
+\textsc{2009-2011} & M.Sc. Project: Transport Constants Calculations by Means of Non-Equilibrium Simulations. \\
+& \emph{Conselho Nacional de Desenvolvimento Cient\'ifico e Tecnol\'ogico (CNPq Scolarship)}\\
+&\\
+
+%------------------------------------------------
+
+\textsc{2008-2009} & Undergraduate Project: Statistical Physics of Polymers: A Computer Approach Using Monte Carlo.\\
+& \emph{CNPq Scolarship}
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%       PEDAGOGIC EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\section{Pedagogic Experience}
+
+\begin{tabular}{r|p{11.5cm}}
+
+\textsc{Autumn 2014} & \textbf{KTH Winter School in Multiscale Modelling}\\
+& \emph{Teaching Assistant: designed a tutorial and taught practical aspects of the Empirical Valence Bond methodology to study enzyme catalysis.} \\ &  Prof: Lynn Kamerlin\\
+\multicolumn{2}{c}{} \\
+
+\textsc{Summer 2014} & \textbf{STINT Summer School in Physical Organic Chemistry}\\
+& \emph{Teaching Assistant: designed a tutorial on using Internal Reaction Coordinates to calculate free energy profiles of reactions with Density Functional Theory} \\ &  Prof: Lynn Kamerlin\\
+\multicolumn{2}{c}{} \\
+
+\textsc{Autumn 2012,} & \textbf{1KB700 - Bioinformatics and Biophysics}\\
+\textsc{2013 and 2014} & \emph{Teaching Assistant: designing computer activities for the students.} \\ &  Prof: Samuel Flores\\
+\multicolumn{2}{c}{} \\
+
+\textsc{Autumn 2014} & \textbf{1MB383 - Macromolecular Engineering} \emph{}\\
+& \emph{Teaching Assistant: taught practical aspects of simulations in biophysics using different methodologies.} \\ & Prof: Samuel Flores \\
+\multicolumn{2}{c}{} \\
+
+\textsc{Autumn 2013} & \textbf{Academic Teacher Training Course}\\
+& \emph{7.5 HP course on developing pedagogic skills for the academic world.} \\ & Prof: Peter Reinholdsson \\
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%       ARTICLES
+%----------------------------------------------------------------------------------------
+
+\section{Publications}
+
+\begin{itemize}
+   \item Barrozo A, Duarte F., Bauer P., Maxwell C.I., Carvalho A.T.P., Kamerlin, S.C.L. Electrostatic Flexibility in the Alkaline Phosphatase Superfamily. \textit{In preparation}
+   \item Shurki A, Derat E., Barrozo A., Kamerlin S.C.L. How valence bond theory can help you understand your (bio)chemical reaction. \textit{Chem. Soc. Rev.} 2015, in press.
+   \item Carvalho A.T.P., Barrozo A., Doron D., Kilshtain A.V., Major D.T., Kamerlin S.C.L. Challenges in computational studies of enzyme structure, function and dynamics. \textit{J. Mol. Graph. Mod.} 2014, 54:62-79.
+   \item Duarte F., Bauer P., Barrozo A., Amrein B.A., Purg M., \AA qvist J., Kamerlin S.C.L. Force Field Independent Metal Parameters Using a Nonbonded Dummy Model. \textit{J. Phys. Chem. B} 2014, 118(16):4351-4362.
+   \item Barrozo A, Borstnar R., Marloie G., Kamerlin S.C.L. Computational protein engineering: bridging the gap between rational design and laboratory evolution. \textit{Int. J. Mol. Sci.} 13(10):12428-12460.
+   \item Barrozo A.H., de Koning M. Comment on “Quantum Thermal Bath for Molecular Dynamics Simulation”. \textit{Phys. Rev. Lett.} 2011, 107(19), 198901. 
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	LANGUAGES
+%----------------------------------------------------------------------------------------
+
+\section{Languages}
+
+\begin{tabular}{rlrl}
+\textsc{English:} & Fluent & \textsc{Portuguese:} & Mothertongue\\
+
+\textsc{French:} & Intermediate & \textsc{Swedish:} & Intermediate\\
+
+\textsc{Turkish:} & Intermediate & \textsc{Spanish:} & Basic\\
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	COMPUTER SKILLS 
+%----------------------------------------------------------------------------------------
+
+\section{Computer Skills}
+
+Intermediate Knowledge: \textsc{bash}, \textsc{C++}, \textsc{fortran}\\
+\begin{tabular}{r|p{11cm}}
+\textsc{2013-Current} & Developer of software package Q. \\
+\end{tabular}
+
+
+%----------------------------------------------------------------------------------------
+%	INTERESTS AND ACTIVITIES
+%----------------------------------------------------------------------------------------
+
+%\section{Interests and Activities}
+
+%Music Composition, Languages, Programming\\
+%Theoretical Physics, Applied Mathematics\\
+%Martial Arts
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
