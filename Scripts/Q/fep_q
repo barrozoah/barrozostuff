@@ -1,0 +1,47 @@
+#!/bin/bash -l
+
+#SBATCH -A SNIC2013-26-1
+#SBATCH -n 6
+#SBATCH -N 1
+#SBATCH -t 144:00:00
+
+module load intel
+module load impi
+
+cp fep_102.re rest_fep_102.re
+
+StartDir=`pwd`
+InpFolder=`echo ${StartDir##*pfs/}`
+cd /scratch
+mkdir -p barrozo/$InpFolder
+
+cd barrozo/$InpFolder
+#pwd
+cp $StartDir/* /scratch/barrozo/$InpFolder
+
+for i in 100 098 096 094 092 090 088 086 084 082 080 078 076 074 072 070 068 066 064 062 060 058 056 054 052 050 048 046 044 042 040 038 036 034 032 030 028 026 024 022 020 018 016 014 012 010 008 006 004 002 000 ; do
+
+   echo "Preparing run for  fep_$i ..."
+   srun -n 6 qdyn5p /scratch/barrozo/$InpFolder/fep_$i.inp > /scratch/barrozo/$InpFolder/fep_$i.log &
+
+   PID=$!
+   t=0
+   while kill -0 $PID >/dev/null 2>&1
+   do
+      sleep 1
+      let t=t+1
+      if [ $t -eq 60 ]
+      then
+#Backup
+         echo -n "."
+         cp -r /scratch/barrozo/$InpFolder/fep_$i* $StartDir/
+         t=0
+      fi
+   done
+
+cp /scratch/barrozo/$InpFolder/fep_$i* $StartDir
+done
+
+rm -r /scratch/barrozo/$InpFolder
+
+# End of script

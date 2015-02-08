@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#Script to find distances between Q-atoms and make an average
+
+if [ "$1" -lt 10 ] && [ "$2" -lt 10 ]; then
+   awk -v numdist=$3 "/dist. between Q-atoms   $1   $2 /"'{sum+=$12; sumsq+= ($12)^2} END { print "Average distance and SD = ",sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist)  }' $4
+elif [ "$1" -ge 10 ] && [ "$2" -lt 10 ]; then
+   awk -v numdist=$3 "/dist. between Q-atoms  $1   $2/"'{sum+=$12; sumsq+= ($12)^2} END { print "Average distance and SD = ",sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' $4
+elif [ "$1" -lt 10 ] && [ "$2" -ge 10 ]; then
+   awk -v numdist=$3 "/dist. between Q-atoms   $1  $2/"'{sum+=$12; sumsq+= ($12)^2} END { print "Average distance and SD = ",sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' $4
+else
+   awk -v numdist=$3 "/dist. between Q-atoms  $1  $2/"'{sum+=$12; sumsq+= ($12)^2} END { print "Average distance and SD =  ",sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' $4
+fi
+
+

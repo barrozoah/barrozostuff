@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Submit 10 jobs
+
+sbatch $1
+for (( i=2; i<=$2; i++ ))
+do
+   cd ../$i
+   sbatch $1
+done
+

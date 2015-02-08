@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Copy restart files to 10 directories
+
+echo "Setting up EVB runs. Make sure your input files are up-to-date."
+
+   cp $1/dyn_evb01.re 1/fep_102.re
+   cp $1/*.top 1/
+   cp $1/*.fep 1/
+
+
+for (( i=2; i<=$2; i++ ))
+do
+   if [ "$i" = "10" ]
+   then
+      cp $1/dyn_evb00.re $i/fep_102.re
+      cp $1/*.top $i/
+      cp $1/*.fep $i/
+      cp 1/*.inp $i/
+      exit 0
+   fi
+
+   cp $1/dyn_evb0$i.re $i/fep_102.re
+   cp $1/*.top $i/
+   cp $1/*.fep $i/
+   cp 1/*.inp $i
+
+done
+

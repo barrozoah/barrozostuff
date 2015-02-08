@@ -1,0 +1,86 @@
+#!/bin/bash
+#############
+####Script mis au point par Gael Marloie (modified by Alexandre Hernandes Barrozo)
+#############
+
+shopt -s extglob
+cpt=0
+ # valeur par defaut de la memoire nombre de proc et temps machine
+Otemps=`grep "#SBATCH --time=" $HOME/pfs/scripts/jobsubmit_g09t`
+proc=12
+vmem=15
+temps=36
+
+if [ $# -lt 1 ]
+then
+  echo "Usage: $0 [-p <number of processors>] [-m <amount of memory (GB) >] [-t <number of hours>] file1 [file2 file3 ...fileN]"
+  exit
+fi
+
+
+while getopts "p:m:t:" option
+do
+     case $option in
+	p)
+	 if [[ $OPTARG = +([0-9]) ]] && [ $OPTARG -le 8 -a $OPTARG -gt 0 ]
+	  then
+	   proc=$OPTARG
+	   ((cpt+=2))
+	  else
+	   echo "Usage: $0 [-p <number of processors>] file1 [file2 file3 ...fileN] "
+	   echo "0 =< number of processors =< 8"
+	   exit
+	 fi;;
+	m)
+	 if [[ $OPTARG = +([0-9]) ]] && [ $OPTARG -gt 0 ]
+	  then 
+	    vmem=$OPTARG
+	    ((cpt+=2))
+	  else 
+	    echo "Usage: $0 [-m <amount of memory (GB)>] file1 [file2 file3 ...fileN] "
+	    echo "Memory > 0"
+	    exit
+	 fi;;
+	t)
+	 if [[ $OPTARG = +([0-9]) ]] && [ $OPTARG -gt 0 ]
+	  then 
+	    temps=$OPTARG
+	    ((cpt+=2))
+	  else 
+	    echo "Usage: $0 [-t <number of hours>] file1 [file2 file3 ...fileN] "
+	    exit
+	 fi;;
+     esac
+   done
+	shift $cpt
+	echo "# processors   : $proc"
+	echo "# GB of memory : $vmem"
+	echo "# hours        : $temps"
+
+for arg in $*
+do 
+
+InputFile=$arg
+Chemin=`pwd`
+OWay=`grep "StartDir=" $HOME/pfs/scripts/jobsubmit_g09t`
+NWay="StartDir=${Chemin}" #chemin du nouveau fichier
+OFile=`grep "InputFile=" $HOME/pfs/scripts/jobsubmit_g09t`
+NFile="InputFile=${InputFile}"
+InputFile2=${InputFile%%.com}
+Prename=${InputFile2}
+Nname="#SBATCH -J ${Prename}"
+
+sed "s|${OWay}|${NWay}|g" < $HOME/pfs/scripts/jobsubmit_g09t > $HOME/pfs/scripts/jobsubmit_g09t.tmp #fonctionnne
+mv -f $HOME/pfs/scripts/jobsubmit_g09t.tmp $HOME/pfs/scripts/jobsubmit_g09t
+
+sed "s/${OFile}/${NFile}/" < $HOME/pfs/scripts/jobsubmit_g09t > $HOME/pfs/scripts/jobsubmit_g09t.tmp #fonctionnne
+mv -f $HOME/pfs/scripts/jobsubmit_g09t.tmp $HOME/pfs/scripts/jobsubmit_g09t
+
+sed "s/${Otemps}/#SBATCH --time=${temps}:00:00/" < $HOME/pfs/scripts/jobsubmit_g09t > $HOME/pfs/scripts/jobsubmit_g09t.tmp #fonctionnne
+mv -f $HOME/pfs/scripts/jobsubmit_g09t.tmp $HOME/pfs/scripts/jobsubmit_g09t
+
+
+sbatch $HOME/pfs/scripts/jobsubmit_g09t
+
+done
+ 

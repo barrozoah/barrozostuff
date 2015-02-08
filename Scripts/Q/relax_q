@@ -1,0 +1,50 @@
+#!/bin/bash -l
+
+#SBATCH -A SNIC2013-26-1
+#SBATCH -n 8
+#SBATCH -N 1
+#SBATCH -t 144:00:00
+
+module load intel
+module load impi
+
+StartDir=`pwd`
+InpFolder=`echo ${StartDir##*pfs/}`
+cd /scratch
+mkdir -p barrozo/$InpFolder
+
+cd barrozo/$InpFolder
+#pwd
+cp $StartDir/* /scratch/barrozo/$InpFolder
+
+for input in dyn_min_wat_noshake.inp dyn_min_wat.inp dyn_min_wat_eq.inp dyn_cool.inp dyn_min.inp dyn_warm30k.inp dyn_warm150k.inp dyn_warm300k.inp dyn_eq300k.inp dyn_5ns.inp dyn_evb01.inp dyn_evb02.inp dyn_evb03.inp dyn_evb04.inp dyn_evb05.inp dyn_evb06.inp dyn_evb07.inp dyn_evb08.inp dyn_evb09.inp dyn_evb00.inp
+do
+   echo "Preparing run for $input ..."
+   InputFile=$input
+   OutputFile=${InputFile%%inp}log
+   srun -n 8 qdyn5p /scratch/barrozo/$InpFolder/$InputFile > /scratch/barrozo/$InpFolder/$OutputFile &
+
+   PID=$!
+   i=0
+   while kill -0 $PID >/dev/null 2>&1
+   do
+      sleep 1
+      let i=i+1
+      if [ $i -eq 60 ]
+      then
+#Backup
+         echo -n "."
+         cp -r /scratch/barrozo/$InpFolder/${InputFile%%inp}* $StartDir/
+         i=0
+      fi
+   done
+
+cp -r /scratch/barrozo/$InpFolder/${InputFile%%inp}* $StartDir
+rm -r /scratch/barrozo/$InpFolder/*.log
+rm -r /scratch/barrozo/$InpFolder/*.dcd
+done
+
+cp -r /scratch/barrozo/$InpFolder/* $StartDir 
+rm -r /scratch/barrozo/$InpFolder
+
+# End of script

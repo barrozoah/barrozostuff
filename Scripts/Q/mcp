@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Copy to 10 directories
+
+for (( i=2; i<=$2; i++ ))
+do
+   cp $1 ../$i
+done
+

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Scan 10 runs and give the averages
+
+dg=0
+dG=0
+
+mcp qfep.inp $1
+
+set -m
+
+qfep5 < qfep.inp > qfep.log &
+cd ..
+
+for (( i=2; i<=$1; i++ ))
+do
+   cd $i
+   qfep5 < qfep.inp > qfep.log &
+   cd ..
+done
+
+while fg; do true; done
+
+for (( i=1; i<=$1; i++ ))
+do
+   cd $i
+   g=$(analysis_tool.sh qfep.log | grep 'dg' | awk 'NR==1 {print $2}')
+   G=$(analysis_tool.sh qfep.log | grep 'dG' | awk 'NR==1 {print $2}')
+
+   echo -e $g '\t' $G
+
+   dg=$(echo $dg + $g | bc -l)
+   dG=$(echo $dG + $G | bc -l)
+   cd ..
+done
+
+avg=$(echo $dg/$1 | bc -l)
+avG=$(echo $dG/$1 | bc -l)
+printf "<dg*> : %.2f \n" "$avg"
+printf "<dG0> : %.2f \n" "$avG"

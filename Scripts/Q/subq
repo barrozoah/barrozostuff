@@ -1,0 +1,74 @@
+#!/bin/bash
+#############
+####Script mis au point par Gael Marloie (modificado por Alexandre Hernandes Barrozo)
+#############
+
+shopt -s extglob
+cpt=0
+ # valeur par defaut de la memoire nombre de proc et hours machine
+Ohours=`grep "#SBATCH --time=" $HOME/pfs/scripts/jobsubmit_Q`
+proc=6
+hours=1
+
+if [ $# -lt 1 ]
+then
+  echo "Usage: $0 [-n <number of cores>] [-t <hours in hours>] file1 [file2 file3 ...fileN]"
+  exit
+fi
+
+
+while getopts "p:t:" option
+do
+     case $option in
+	p)
+	 if [[ $OPTARG = +([0-9]) ]] && [ $OPTARG -le 8 -a $OPTARG -gt 0 ]
+	  then
+	   proc=$OPTARG
+	   ((cpt+=2))
+	  else
+	   echo "Usage: $0 [-n <number of cores>] file1 [file2 file3 ...fileN] "
+	   echo "0 =< number processors =< 8"
+	   exit
+	 fi;;
+	t)
+	 if [[ $OPTARG = +([0-9]) ]] && [ $OPTARG -gt 0 ]
+	  then 
+	    hours=$OPTARG
+	    ((cpt+=2))
+	  else 
+	    echo "Usage: $0 [-t <amount of hours>] file1 [file2 file3 ...fileN] "
+	    exit
+	 fi;;
+     esac
+   done
+	shift $cpt
+	echo "cores : $proc"
+	echo "hours  : $hours"
+
+for arg in $*
+do 
+
+InputFile=$arg
+Path=`pwd`
+OWay=`grep "StartDir=" $HOME/pfs/scripts/jobsubmit_Q`
+NWay="StartDir=${Path}" #chemin du nouveau fichier
+OFile=`grep "InputFile=" $HOME/pfs/scripts/jobsubmit_Q`
+NFile="InputFile=${InputFile}"
+InputFile2=${InputFile%%.inp}
+Prename=${InputFile2}
+Nname="#SBATCH -J ${Prename}"
+Nhours="#SBATCH --time=${hours}:00:00"
+
+sed "s|${OWay}|${NWay}|g" < $HOME/pfs/scripts/jobsubmit_Q > $HOME/pfs/scripts/jobsubmit_Q.tmp #fonctionnne
+mv -f $HOME/pfs/scripts/jobsubmit_Q.tmp $HOME/pfs/scripts/jobsubmit_Q
+
+sed "s/${OFile}/${NFile}/" < $HOME/pfs/scripts/jobsubmit_Q > $HOME/pfs/scripts/jobsubmit_Q.tmp #fonctionnne
+mv -f $HOME/pfs/scripts/jobsubmit_Q.tmp $HOME/pfs/scripts/jobsubmit_Q
+
+sed "s/${Ohours}/${Nhours}/" < $HOME/pfs/scripts/jobsubmit_Q > $HOME/pfs/scripts/jobsubmit_Q.tmp #fonctionnne
+mv -f $HOME/pfs/scripts/jobsubmit_Q.tmp $HOME/pfs/scripts/jobsubmit_Q
+
+sbatch $HOME/pfs/scripts/jobsubmit_Q
+
+done
+ 
