@@ -1,0 +1,41 @@
+First La Pompe in G
+
+Intro
+----------
+
+E 7 8 9 10^7           7\6       6 5^6^5                             5 3^5^3                                  -
+B            8       8     8   8         7 4                                 5 4 3         3                  5
+G              7   7         6               5                   5 8               4 2 3 4   4 2              5
+D                9                             7 4           4 7                                 4 2          4
+A                                                  6 3   3 6                                         5 3 2    5
+E                                                      5                                                   3  -
+
+
+Chords
+----------
+G7/13  C7/9- D7/9
+G7/13  B9(hollow) Bb9(hollow) A6 D7/9
+G7/13  C7/9- D7/9
+G7/13  Abo Bb9(hollow) A6 D7/9
+
+Verse 2
+C7/9-  D7/9  G7/13  F7/9(8ve) E7/9- E7
+A6 D7/9
+
+
+-------------------------------------
+Excuse-moi, Lucie
+
+Same Intro as above, a bit shorter, up one tone
+
+Chords
+----------
+D6/9  Bm7  E7/11  D#7/11(A#)
+D6/9  D#o  E7  A7/13
+
+Chorus
+F#7/11   F7/11  E7/11  A7/13
+
+
+
+
