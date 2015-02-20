@@ -1,0 +1,7 @@
+Calculating average distances
+------------------------------
+
+avdist.tcl goes with av-std.sh
+
+First edit avdist.tcl to the desired atoms. Their atom ID is the number in the PDB - 1. 
+Run using 'vmd PDB DCD -e avdist.tcl'. Then, use av-std.sh for the .dat files
