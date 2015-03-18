@@ -1,0 +1,24 @@
+set term svg font "Arial Bold,12" size 1600,1200
+set output 'gc-2vqr-mutants.svg'
+set style data histograms
+set style histogram cluster gap 1
+set style fill solid border -1
+set style fill solid
+set key samplen 4 spacing 4.0 font ",20"
+set xzeroaxis linetype 3 linewidth 1.0 lc rgb "#000000"
+
+set border 1+2 back
+set xtics nomirror
+set ytics nomirror
+set xtics font ',20'
+set ytics font ',20'
+
+
+set boxwidth 0.9
+
+plot "2vqr-wt.dat" using 2:xtic(1) title "WT" lt rgb "#EDC951", \
+     "2vqr-q013a.dat" using 2:xtic(1) title "Q013A" lt rgb "#78AE62", \
+     "2vqr-n078a.dat" using 2:xtic(1) title "N078A" lt rgb "#0B486B", \
+     "2vqr-y105a.dat" using 2:xtic(1) title "Y105A" lt rgb "#906D83", \
+     "2vqr-t107a.dat" using 2:xtic(1) title "T107A" lt rgb "#CC333F", \
+     "2vqr-h218a.dat" using 2:xtic(1) title "H218A" lt rgb "#FF8C4F"

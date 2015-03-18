@@ -1,0 +1,62 @@
+set terminal postscript eps enhanced color size 20cm,17cm \
+  "Helvetica-Bold,30" rounded linewidth 5
+
+set title "Water"
+unset label
+set ylabel "dG"
+set yrange [-22.0:20]
+set xrange [-400:500]
+set key right
+set xlabel "{/Symbol e} (kcal/mol)"
+set output "h2o-lys_energy.eps"
+plot "1/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#ffffcc" title "1",\
+"2/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#ffeda0" title "2" ,\
+"3/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fed976" title "3" ,\
+"4/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#feb24c" title "4" ,\
+"5/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "orange" title "5" ,\
+"6/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fd8d3c" title "6",\
+"7/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fc4e2a" title "7",\
+"8/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#e31a1c" title "8" ,\
+"9/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#bd0026" title "9" ,\
+"10/dG_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#800026" title "10"
+
+
+set title "Water"
+unset label
+set ylabel "dG"
+set yrange [-20.0:120]
+set xrange [0:1]
+set key right
+set xlabel "{/Symbol l}"
+set output "h2o-lys_lambda.eps"
+plot "1/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#ffffcc" title "1",\
+"2/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#ffeda0" title "2" ,\
+"3/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fed976" title "3" ,\
+"4/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#feb24c" title "4" ,\
+"5/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "orange" title "5" ,\
+"6/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fd8d3c" title "6",\
+"7/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fc4e2a" title "7",\
+"8/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#e31a1c" title "8" ,\
+"9/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#bd0026" title "9" ,\
+"10/lambda_dG.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#800026" title "10"
+
+
+set title "Water"
+unset label
+set ylabel "dE"
+set yrange [-400.0:500]
+set xrange [0:1]
+set key right
+set xlabel "{/Symbol l}"
+set output "h2o-lys_lambda2.eps"
+plot "1/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#ffffcc" title "1",\
+"2/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#ffeda0" title "2" ,\
+"3/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fed976" title "3" ,\
+"4/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#feb24c" title "4" ,\
+"5/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "orange" title "5" ,\
+"6/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fd8d3c" title "6",\
+"7/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#fc4e2a" title "7",\
+"8/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#e31a1c" title "8" ,\
+"9/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#bd0026" title "9" ,\
+"10/lambda_dE.log" u 1:2 w lines  lt 2 lw 2  lc rgb "#800026" title "10"
+
