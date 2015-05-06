@@ -10,7 +10,33 @@
 
 \documentclass{beamer}
 \usetheme{bjeldbak}
-\beamertemplatenavigationsymbolsempty
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\tcbuselibrary{skins}
+
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
+
+\tcbset{tab1/.style={fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=pale,colframe=kindaorange,colbacktitle=white,
+coltitle=black,center title,freelance,frame code={
+\foreach \n in {north east,north west,south east,south west}
+{\path [fill=kindaorange] (interior.\n) circle (3mm); };},}}
+
+%\tcbset{tab2/.style={enhanced,fonttitle=\bfseries,fontupper=\normalsize\sffamily,
+%colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!40!white,
+%coltitle=black,center title}}
+
+
+\definecolor{goldenrod}{HTML}{CDC279}
+\definecolor{yellowgreen}{HTML}{A6CD7F}
+\definecolor{pale}{HTML}{F0E9D9}
+\definecolor{kindaorange}{HTML}{FFBD52}
 
 \begin{document}
 \title{Electrostatic Flexibility in the Alkaline Phosphatase Superfamily}   
@@ -22,89 +48,154 @@
 \frame{\frametitle{Overview}\tableofcontents} 
 
 
-\section{Catalytic promiscuity} 
-\frame{\frametitle{Title} 
-Each frame should have a title.
-}
-\frame{ 
-Without title somethink is missing. 
-}
-
-
-\section{Section no. 2} 
-\frame{\frametitle{unnumbered lists}
-\begin{itemize}
-\item Introduction to  \LaTeX  
-\item Course 2 
-\item Termpapers and presentations with \LaTeX 
-\item Beamer class
-\end{itemize} 
+\section{Catalytic promiscuity in the AP superfamily} 
+%\subsection{Alkaline}
+\frame{\frametitle{The alkaline phosphatase and its substrates} 
+\begin{figure}
+\vspace*{-0.45cm}
+\centering
+\includegraphics[width=0.825\textwidth,keepaspectratio]{images/ap-substrates.png}
+\end{figure}
 }
 
-\frame{\frametitle{lists with pause}
-\begin{itemize}
-\item Introduction to  \LaTeX \pause 
-\item Course 2 \pause 
-\item Termpapers and presentations with \LaTeX \pause 
-\item Beamer class
-\end{itemize} 
+\frame{\frametitle{Crosswise catalytic promiscuity}
+\begin{figure}
+\vspace*{-0.5cm}
+\hspace*{0.25cm}
+\includegraphics[width=0.8\textwidth,keepaspectratio,left]{images/crossreactivity.png}
+\end{figure}
 }
 
-\frame{\frametitle{numbered lists}
-\begin{enumerate}
-\item Introduction to  \LaTeX  
-\item Course 2 
-\item Termpapers and presentations with \LaTeX 
-\item Beamer class
-\end{enumerate}
-}
-\frame{\frametitle{numbered lists with pause}
-\begin{enumerate}
-\item Introduction to  \LaTeX \pause 
-\item Course 2 \pause 
-\item Termpapers and presentations with \LaTeX \pause 
-\item Beamer class
-\end{enumerate}
+\frame{\frametitle{Comparing active sites}
+\begin{figure}
+\vspace*{-0.125cm}
+\centering
+\includegraphics[width=0.825\textwidth,keepaspectratio]{images/activesites.png}
+\end{figure}
 }
 
-\section{Section no.3} 
-\frame{\frametitle{Tables}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Date} & \textbf{Instructor} & \textbf{Title} \\
-\hline
-WS 04/05 & Sascha Frank & First steps with  \LaTeX  \\
-\hline
-SS 05 & Sascha Frank & \LaTeX \ Course serial \\
-\hline
+\frame{\frametitle{\textcolor{goldenrod}{\textbf{\textit{Rl}PMH}} X \textcolor{yellowgreen}{\textbf{PAS}}}
+\begin{figure}
+\vspace*{-0.15cm}
+\centering
+\includegraphics[width=0.75\textwidth,keepaspectratio]{images/as-overlay.png}
+\end{figure}
+}
+
+\section{Phosphonate Monoester Hydrolase} 
+\frame{\frametitle{Phosphonate monoester hydrolase}
+\begin{figure}
+\vspace*{-0.75cm}
+\hspace*{-0.75cm}
+\centering
+\includegraphics[width=1.125\textwidth,keepaspectratio]{images/pmh-substrates.png}
+\end{figure}
+}
+
+\frame{\frametitle{The active site}
+\begin{figure}
+\vspace*{-0.125cm}
+\hspace*{-0.5cm}
+\centering
+\includegraphics[width=0.75\textwidth,keepaspectratio]{images/pmh-as.png}
+\end{figure}
+}
+
+\frame{\frametitle{Suggested mechanism}
+\begin{figure}
+\vspace*{-0.25cm}
+\hspace*{-0.75cm}
+\centering
+\includegraphics[width=1.15\textwidth,keepaspectratio]{images/pmh-mech2.png}
+\end{figure}
+}
+
+\frame{\frametitle{Energetics for the hydrolysis of \textcolor{blue}{\textit{Rl}PMH} and \textcolor{red}{\textit{Bc}PMH}}
+\begin{figure}
+%\vspace*{-0.25cm}
+\centering
+\includegraphics[width=0.9\textwidth,keepaspectratio]{images/energiessubstrates.png}
+\end{figure}
+}
+
+\frame{\frametitle{Energetics for the hydrolysis of \textcolor{blue}{PHOSPHONATE} and \textcolor{red}{PHOSPHODIESTER}}
+\begin{figure}
+\hspace*{-0.25cm}
+\centering
+\includegraphics[width=0.875\textwidth,keepaspectratio]{images/energiesmutants.png}
+\end{figure}
+}
+
+\frame{\frametitle{Electrostatic contributions for every mutant}
+\begin{figure}
+\vspace*{-0.125cm}
+\hspace*{-0.25cm}
+\centering
+\includegraphics[width=1.0\textwidth,keepaspectratio]{images/gc-2vqr-mutants.png}
+\end{figure}
+}
+
+\section{Analysis of Distinct Active Sites} 
+\frame{\frametitle{Different shapes}
+\begin{figure}
+\vspace*{-0.15cm}
+\centering
+\includegraphics[width=0.75\textwidth,keepaspectratio]{images/ap-pocketsshape.png}
+\end{figure}
+}
+
+\frame{\frametitle{Polarity of the pockets}
+\begin{figure}
+\vspace*{-0.15cm}
+\centering
+\includegraphics[width=0.75\textwidth,keepaspectratio]{images/ap-pocketspolarity.png}
+\end{figure}
+}
+
+\frame{\frametitle{Active sites properties}
+\begin{center}
+\tcbset{center title}
+\tcbox[left=0mm,right=0mm,top=0mm,bottom=0mm,boxsep=0mm,
+toptitle=0.5mm,bottomtitle=0.5mm,title=Active site properties]{%
+\arrayrulecolor{kindaorange}\renewcommand{\arraystretch}{1.2}%
+\begin{tabular}{ c c c c }
+\small
+\centering
+
+\textbf{Enzyme} & \textbf{Volume} & \textbf{Polar SA} & \textbf{Activities} \\
+AP & 1870.7 & 320 & 6 \\
+PMH & 1215 & 240.4 & 5 \\
+NPP & 1016.9 & 238.5 & 5 \\
+PAS & 756.7 & 87.2 & 3 \\
+ASA & 540.7 & 181.3 & 2 \\
+N-ac4S & 431.9 & 106.6 & 2 \\
+iPGM & 151.2 & 39.2 & 1 \\
+
 \end{tabular}}
-
-
-\frame{\frametitle{Tables with pause}
-\begin{tabular}{c c c}
-A & B & C \\ 
-\pause 
-1 & 2 & 3 \\  
-\pause 
-A & B & C \\ 
-\end{tabular} }
-
-
-\section{Section no. 4}
-\frame{\frametitle{blocs}
-
-\begin{block}{title of the bloc}
-bloc text
-\end{block}
-
-\begin{exampleblock}{title of the bloc}
-bloc text
-\end{exampleblock}
-
-
-\begin{alertblock}{title of the bloc}
-bloc text
-\end{alertblock}
+\end{center}
 }
+
+\section{Conclusions}
+\frame{\frametitle{Conclusions}
+\begin{itemize}
+   \item Electrostatic flexibility
+   \begin{itemize}
+      \item Five reactions, one single mechanism
+      \item Sturdy active site
+   \end{itemize}
+   \item Possible trend between activities, volume and polar surface area
+\end{itemize}
+}
+
+\frame{\frametitle{Great people to thank and buy a dinner}
+\begin{itemize}
+   \item Lynn Kamerlin
+   \item Fernanda Duarte
+   \item Alexandra Carvalho
+   \item Paul Bauer
+   \item Johan \r{A}qvist
+\end{itemize}
+}
+
 \end{document}
 
