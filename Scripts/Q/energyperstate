@@ -1,0 +1,46 @@
+#!/bin/bash
+#########################################
+# Script to open mapping file from Q    #
+# and print relevant information    #
+#########################################
+
+# float number comparison
+function fcomp() {
+    awk -v n1=$1 -v n2=$2 'BEGIN{ if (n1<n2) exit 0; exit 1}'
+}
+
+if [ -f "energy_comp.log" ]
+then
+rm energy_comp.log
+fi
+ 
+read beginrs <<< $(awk '$0 ~ str{print NR}' str="fep_$2.en             1" $1)
+ 
+echo -e State '\t' EQtot '\t' EQel > f1.log
+read lambda1 eqtot1 eqel1 <<< $(awk -v state1=$beginrs 'NR==state1 {print $4, $5, $10} ' $1)
+read lambda2 eqtot2 eqel2 <<< $(awk -v state1=$beginrs 'NR==state1+1 {print $4, $5, $10} ' $1)
+
+eqtot=$(echo $eqtot1*$lambda1 + $eqtot2*$lambda2 | bc)
+eqel=$(echo $eqel1*$lambda1 + $eqel2*$lambda2 | bc)
+
+echo -e RS:     $eqtot  $eqel >> energy_comp.log
+
+read begints <<< $(awk '$0 ~ str{print NR}' str="fep_$3.en             1" $1)
+
+read lambda1 eqtot1 eqel1 <<< $(awk -v state1=$begints 'NR==state1 {print $4, $5, $10} ' $1)
+read lambda2 eqtot2 eqel2 <<< $(awk -v state1=$begints 'NR==state1+1 {print $4, $5, $10} ' $1)
+
+eqtot=$(echo $eqtot1*$lambda1 + $eqtot2*$lambda2 | bc)
+eqel=$(echo $eqel1*$lambda1 + $eqel2*$lambda2 | bc)
+
+echo -e TS:     $eqtot  $eqel >> energy_comp.log
+
+read beginps <<< $(awk '$0 ~ str{print NR}' str="fep_$4.en             1" $1)
+
+read lambda1 eqtot1 eqel1 <<< $(awk -v state1=$beginps 'NR==state1 {print $4, $5, $10} ' $1)
+read lambda2 eqtot2 eqel2 <<< $(awk -v state1=$beginps 'NR==state1+1 {print $4, $5, $10} ' $1)
+
+eqtot=$(echo $eqtot1*$lambda1 + $eqtot2*$lambda2 | bc)
+eqel=$(echo $eqel1*$lambda1 + $eqel2*$lambda2 | bc)
+
+echo -e PS:     $eqtot  $eqel >> energy_comp.log
