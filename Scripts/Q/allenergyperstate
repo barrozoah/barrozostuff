@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# Scan 10 runs and give the averages
+
+RSEQtot=0
+RSEQel=0
+TSEQtot=0
+TSEQel=0
+PSEQtot=0
+PSEQel=0
+
+FEPNUM1="086 054 010"
+FEPNUM2="084 054 010"
+FEPNUM3="084 054 010"
+FEPNUM4="084 054 010"
+FEPNUM5="086 054 010"
+FEPNUM6="084 054 010"
+FEPNUM7="086 054 010"
+FEPNUM8="082 054 010"
+FEPNUM9="084 054 010"
+FEPNUM10="084 054 010"
+
+fepnumb="FEPNUM1"
+frames=(${!fepnumb})
+rs=${frames[0]}
+ts=${frames[1]}
+ps=${frames[2]}
+
+set -m
+
+energyperstate.sh qfep.log $rs $ts $ps &
+
+cd ..
+
+for (( i=2; i<=10; i++ ))
+do
+   cd $i
+   fepnumb="FEPNUM$i"
+   frames=(${!fepnumb})
+   rs=${frames[0]}
+   ts=${frames[1]}
+   ps=${frames[2]}
+   energyperstate.sh qfep.log $rs $ts $ps &
+   cd ..
+done
+
+while fg; do true; done
+
+for (( i=1; i<=10; i++ ))
+do
+   cd $i
+   rseqtot=$(awk 'NR==1 {print $2}' energy_comp.log)
+   rseqel=$(awk 'NR==1 {print $3}' energy_comp.log)
+
+   tseqtot=$(awk 'NR==2 {print $2}' energy_comp.log)
+   tseqel=$(awk 'NR==2 {print $3}' energy_comp.log)
+
+   pseqtot=$(awk 'NR==3 {print $2}' energy_comp.log)
+   pseqel=$(awk 'NR==3 {print $3}' energy_comp.log)
+
+   RSEQtot=$(echo $RSEQtot + $rseqtot | bc -l)
+   RSEQel=$(echo $RSEQel + $rseqel | bc -l)
+
+   TSEQtot=$(echo $TSEQtot + $tseqtot | bc -l)
+   TSEQel=$(echo $TSEQel + $tseqel | bc -l)
+
+   PSEQtot=$(echo $PSEQtot + $pseqtot | bc -l)
+   PSEQel=$(echo $PSEQel + $pseqel | bc -l)
+   cd ..
+done
+
+avgRSEQtot=$(echo $RSEQtot/10 | bc -l)
+avgRSEQel=$(echo $RSEQel/10 | bc -l)
+
+avgTSEQtot=$(echo $TSEQtot/10 | bc -l)
+avgTSEQel=$(echo $TSEQel/10 | bc -l)
+
+avgPSEQtot=$(echo $PSEQtot/10 | bc -l)
+avgPSEQel=$(echo $PSEQel/10 | bc -l)
+
+printf "RSEQtot : %.2f \n" "$avgRSEQtot"
+printf "RSEQel  : %.2f \n" "$avgRSEQel"
+printf "TSEQtot : %.2f \n" "$avgTSEQtot"
+printf "TSEQel  : %.2f \n" "$avgTSEQel"
+printf "PSEQtot : %.2f \n" "$avgPSEQtot"
+printf "PSEQel  : %.2f \n" "$avgPSEQel"
