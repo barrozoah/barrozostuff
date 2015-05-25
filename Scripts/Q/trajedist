@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#Script to find distances between Q-atoms and make an average
+
+if [ -f "dist_$1_$2.log" ]; then
+   rm dist_$1_$2.log
+fi
+
+lbd=1.0
+
+for i in 100 098 096 094 092 090 088 086 084 082 080 078 076 074 072 070 068 066 064 062 060 058 056 054 052 050 048 046 044 042 040 038 036 034 032 030 028 026 024 022 020 018 016 014 012 010 008 006 004 002 000 ; do
+
+if [ "$1" -lt 10 ] && [ "$2" -lt 10 ]; then
+   awk -v lambda="$lbd" "/dist. between Q-atoms   $1   $2 /"'{sum+=$12; sumsq+= ($12)^2; numdist+= 1} END { print  lambda , sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' fep_$i.log > dist.log
+elif [ "$1" -ge 10 ] && [ "$2" -lt 10 ]; then
+   awk "/dist. between Q-atoms  $1   $2/"'{sum+=$12; sumsq+= ($12)^2; numdist+= 1} END { print lambda , sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' fep_$i.log > dist.log
+elif [ "$1" -lt 10 ] && [ "$2" -ge 10 ]; then
+   awk "/dist. between Q-atoms   $1  $2/"'{sum+=$12; sumsq+= ($12)^2; numdist+= 1} END { print lambda , sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' fep_$i.log > dist.log
+else
+   awk "/dist. between Q-atoms  $1  $2/"'{sum+=$12; sumsq+= ($12)^2; numdist+= 1} END { print lambda , sum/numdist , sqrt((sumsq-(sum)^2/numdist)/numdist) }' fep_$i.log > dist.log
+fi
+
+lbd=$(echo $lbd - 0.02 | bc)
+
+cat dist.log >> dist_$1_$2.log
+
+done
+
