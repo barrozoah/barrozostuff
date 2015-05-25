@@ -11,29 +11,31 @@ function fcomp() {
 
 if [ -f "dG_dE.log" ]
 then
-rm dG_dE.log lambda_dE.log
+rm dG_dE.log lambda_dE.log lambda_dG.log
 fi
  
 read begin1 <<< $(awk '$0 ~ str{print NR}' str="Part 3" $1)
 begin1=$(($begin1+2))
  
-echo -e dE '\t' dG > f1.log
-awk -v firstline=$begin1 'NR>firstline {print $2, $4} ' $1 > f2.log
+echo -e bin '\t' dE '\t' dG > f1.log
+awk -v firstline=$begin1 'NR>firstline {print $1, $2, $4} ' $1 > f2.log
 cat f1.log f2.log >> dG_dE.log
 rm f1.log f2.log
  
-read min1 min1_gap <<< $(awk 'min=="" || $2 < min {min=$2; mingap=$1}; END{ print min,mingap}'  dG_dE.log)
+read minbin min1 min1_gap <<< $(awk 'min=="" || $3 < min {bin =$1; min=$3; mingap=$2}; END{ print bin,min,mingap}'  dG_dE.log)
 
 if fcomp $min1_gap 0;
 then
    rs=$min1
-   read min2 min2_gap <<< $(awk 'min=="" || $2 < min && $1 > 0 {min=$2; mingap=$1}; END{ print min,mingap}'  dG_dE.log)
-   read ts ts_gap <<< $(awk -v m1="$min1_gap" -v m2="$min2_gap" 'NR>2 && max=="" || $2 > max && $1 > m1 && $1 < m2 {max=$2; maxgap=$1}; END{ print max,maxgap}'  dG_dE.log)
+   rs_bin=$minbin
+   read ps_bin min2 min2_gap <<< $(awk 'min=="" || $3 < min && $2 > 0 {min=$3; mingap=$2; bin=$1}; END{ print bin,min,mingap}'  dG_dE.log)
+   read ts_bin ts ts_gap <<< $(awk -v m1="$min1_gap" -v m2="$min2_gap" 'NR>2 && max=="" || $3 > max && $2 > m1 && $2 < m2 {max=$3; maxgap=$2; bin=$1}; END{ print bin,max,maxgap}'  dG_dE.log)
    ps=$min2
 else
    ps=$min1
-   read min2 min2_gap <<< $(awk 'min=="" || $2 < min && $1 < 0 {min=$2; mingap=$1}; END{ print min,mingap}'  dG_dE.log)
-   read ts ts_gap <<< $(awk -v m1="$min1_gap" -v m2="$min2_gap" 'NR>2 && max=="" || $2 > max && $1 < m1 && $1 > m2 {max=$2; maxgap=$1}; END{ print max,maxgap}'  dG_dE.log)
+   ps_bin=$minbin
+   read rs_bin min2 min2_gap <<< $(awk 'min=="" || $3 < min && $2 < 0 {min=$3; mingap=$2; bin=$1}; END{ print bin,min,mingap}'  dG_dE.log)
+   read ts_bin ts ts_gap <<< $(awk -v m1="$min1_gap" -v m2="$min2_gap" 'NR>2 && max=="" || $3 > max && $2 < m1 && $2 > m2 {max=$3; maxgap=$2; bin=$1}; END{ print bin,max,maxgap}'  dG_dE.log)
    rs=$min2
 fi
 
@@ -48,9 +50,24 @@ fi
 
 dg=$(echo $ts - $rs | bc)
 dG0=$(echo $ps - $rs | bc)
- 
+
+
+read begin1 <<< $(awk '$0 ~ str{print NR}' str="Part 2" $1)
+read last1 <<< $(awk '$0 ~ str{print NR}' str="Part 3" $1)
+
+read rsfr <<< $(awk -v firstline="$begin1" -v lastline="$last1" -v binnumb="$rs_bin" -v maxpoints=0 'NR>firstline && NR<lastline && $2==binnumb && maxpoints < $7 {maxpoints=$7; lambda=$1}; END{ print lambda}' $1)
+#read tsfr <<< $(awk -v firstline="$begin1" -v lastline="$last1" -v binnumb="$ts_bin" -v maxpoints=0 'NR>firstline && NR<lastline && $2==binnumb && maxpoints < $7 {maxpoints=$7; lambda=$1}; END{ print lambda}' $1)
+read psfr <<< $(awk -v firstline="$begin1" -v lastline="$last1" -v binnumb="$ps_bin" -v maxpoints=0 'NR>firstline && NR<lastline && $2==binnumb && maxpoints < $7 {maxpoints=$7; lambda=$1}; END{ print lambda}' $1)
+
+read begin1 <<< $(awk '$0 ~ str{print NR}' str="Part 1" $1)
+read last1 <<< $(awk '$0 ~ str{print NR}' str="# Min energy-gap" $1)
+
+read tsfr <<< $(awk -v firstline="$begin1" -v lastline="$last1" -v maxdg=0 'NR>firstline+1 && NR<lastline-1 && maxdg < $6 {maxdg=$6; lambda=$1}; END{ print lambda}' $1)
+
 echo "dg*: $dg"
 echo "dG0: $dG0"
+echo "bins: $rs_bin $ts_bin $ps_bin"
+echo "RS, TS and PS frames: $rsfr $tsfr $psfr"
 
 sed 's/.800000/.80000 /g' $1 > $1.tmp
 sed 's/.600000/.60000 /g' $1.tmp > $1
@@ -87,6 +104,14 @@ echo -e lambda '\t' dG > f1.log
 awk -v firstline=$begin1 -v lastline=$end1 'NR>firstline&&NR<=lastline {print $1, $3} ' $1  > f2.log
 cat f1.log f2.log >> lambda_dE.log
 rm f1.log f2.log
+
+read begin1 <<< $(awk '$0 ~ str{print NR}' str="Part 1" $1)
+begin1=$(($begin1+2))
+
+read end1 <<< $(awk '$0 ~ str{print NR}' str="Part 2" $1)
+end1=$(($end1-3))
+
+awk -v firstline=$begin1 -v lastline=$end1 'NR>firstline-1&&NR<=lastline-2 {print $1, $6} ' $1  > lambda_dG.log
 
 if [ -z ${3+x} ]
 then
