@@ -21,13 +21,18 @@ done
 
 while fg; do true; done
 
+   echo -e "dg*" '\t' "dG0" '\t' "RS" '\t' '\t' "TS" '\t' '\t' "PS"
+
 for (( i=1; i<=$1; i++ ))
 do
    cd $i
    g=$(analysis_tool.sh qfep.log | grep 'dg' | awk 'NR==1 {print $2}')
    G=$(analysis_tool.sh qfep.log | grep 'dG' | awk 'NR==1 {print $2}')
+   rsfr=$(analysis_tool.sh qfep.log | grep 'RS' | awk 'NR==1 {print $6}')
+   tsfr=$(analysis_tool.sh qfep.log | grep 'RS' | awk 'NR==1 {print $7}')
+   psfr=$(analysis_tool.sh qfep.log | grep 'RS' | awk 'NR==1 {print $8}')
 
-   echo -e $g '\t' $G
+   echo -e $g '\t' $G # '\t' $rsfr '\t' $tsfr '\t' $psfr
 
    dg=$(echo $dg + $g | bc -l)
    dG=$(echo $dG + $G | bc -l)
