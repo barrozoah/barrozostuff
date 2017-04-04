@@ -1,0 +1,26 @@
+set term svg font "Arial Bold,28" size 1200,800
+set output 'fig1.svg'
+set style data histograms
+set style histogram cluster gap 1
+set style fill solid border -1
+set style fill solid
+set key samplen 4 spacing 1.0 font ",28"
+set xzeroaxis linetype 3 linewidth 1.0 lc rgb "#000000"
+
+set yrange [0:25]
+set xrange [-0.5:7]
+
+set border 1+2 back
+set xtics nomirror
+set ytics nomirror
+set xtics font ',28'
+set ytics font ',28'
+set xtics offset 1.0
+set ylabel font ',28' "Activation Free Energy (kcal mol^{-1})
+
+set key at 7,26
+
+set boxwidth 0.25
+
+plot "bpgm-calc.dat" using ($0+0.0):2:3:xtic(1) with boxerrorbars title "Calculated" lw 3 lt rgb "#BE0F1E", \
+     "bpgm-exp.dat" using ($0+0.25):2:3 with boxerrorbars title "Experimental" lw 3 lt rgb "#EBA0A6"
